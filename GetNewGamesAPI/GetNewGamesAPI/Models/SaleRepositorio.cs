@@ -1,15 +1,15 @@
 ﻿using MySql.Data.MySqlClient;
+using Placemybet.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using System.Diagnostics;
-using Org.BouncyCastle.Asn1;
 
-namespace Placemybet.Models
+namespace GetNewGamesAPI.Models
 {
-    public class UserRepositorio
+    public class SaleRepositorio
     {
+
 
         private MySqlConnection Connect()
         {
@@ -23,13 +23,13 @@ namespace Placemybet.Models
             MySqlConnection con = new MySqlConnection(connString);
             return con;
         }
-        internal List<User> Retrive()
+        internal List<Sale> Retrive()
         {
-            List<User> mercados = new List<User>();
+            List<Sale> mercados = new List<Sale>();
             MySqlConnection con = Connect();
             MySqlCommand comand = con.CreateCommand();
-            comand.CommandText = "SELECT * FROM `users`";
-            User ap = null;
+            comand.CommandText = "SELECT * FROM `Sales`";
+            Sale ap = null;
             try
             {
                 con.Open();
@@ -37,33 +37,33 @@ namespace Placemybet.Models
 
                 if (res.Read())
                 {
-                    ap = new User(res.GetInt32(0), res.GetString(1), res.GetString(2), res.GetBoolean(3));
+                    ap = new Sale(res.GetInt32(0), res.GetInt32(1), res.GetInt32(2), res.GetDecimal(3) , res.GetString(4));
                     mercados.Add(ap);
                 }
-            
+
             }
             catch (Exception e)
             {
 
-             
+
             }
-            
+
             con.Close();
             return mercados;
         }
-        
 
 
 
 
 
-     internal List<User> Retrive2(int id)
+
+        internal List<Sale> Retrive2(int id)
         {
-            List<User> mercados = new List<User>();
+            List<Sale> mercados = new List<Sale>();
             MySqlConnection con = Connect();
             MySqlCommand comand = con.CreateCommand();
-            comand.CommandText = "SELECT* FROM `User` WHERE `USUARIO_EMAIL` = '"+id+"'";
-            User ap = null;
+            comand.CommandText = "SELECT* FROM `Sale` WHERE `USUARIO_EMAIL` = '" + id + "'";
+            Sale ap = null;
             try
             {
                 con.Open();
@@ -71,7 +71,7 @@ namespace Placemybet.Models
 
                 if (res.Read())
                 {
-                    ap = new User(res.GetInt32(0), res.GetString(1), res.GetString(2), res.GetBoolean(3));
+                    ap = new Sale(res.GetInt32(0), res.GetInt32(1), res.GetInt32(2), res.GetDecimal(3), res.GetString(4));
                     mercados.Add(ap);
                 }
 
@@ -84,16 +84,16 @@ namespace Placemybet.Models
             return mercados;
         }
 
-        
 
-     
-        internal void Save(User a)
+        /*
+
+        internal void Save(Sale a)
         {
-            //User a = new User(23, "2020-11-05 12:22:54", 1, 23, "123", "123");
+            //Sale a = new Sale(23, "2020-11-05 12:22:54", 1, 23, "123", "123");
             MySqlConnection con = Connect();
             MySqlCommand command = con.CreateCommand();
-            command.CommandText = "INSERT INTO `User` (`iduser`, `name`, `pasword`, `admin`) VALUES ('" + a.iduser + "' , '" + a.name + "' ,'" + a.pasword + "' ,'" + a.admin + "' );";
-          
+            command.CommandText = "INSERT INTO `Sale` (`idSale`, `name`, `pasword`, `admin`) VALUES ('" + a.idSale + "' , '" + a.name + "' ,'" + a.pasword + "' ,'" + a.admin + "' );";
+
             try
             {
                 con.Open();
@@ -102,16 +102,13 @@ namespace Placemybet.Models
             }
             catch (Exception e)
             {
-                Debug.WriteLine("Error Insert User");
+                Debug.WriteLine("Error Insert Sale");
             }
         }
 
-
-       
-
+    */
 
 
 
     }
-
 }
