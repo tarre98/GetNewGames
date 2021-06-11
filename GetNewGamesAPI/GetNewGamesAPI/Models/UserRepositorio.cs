@@ -6,7 +6,7 @@ using System.Web;
 using System.Diagnostics;
 using Org.BouncyCastle.Asn1;
 
-namespace Placemybet.Models
+namespace GetNewGamesAPI.Models
 {
     public class UserRepositorio
     {
@@ -52,7 +52,36 @@ namespace Placemybet.Models
             return mercados;
         }
         
+        internal bool log()
+        {
+            MySqlConnection con = Connect();
+            MySqlCommand comand = con.CreateCommand();
+            comand.CommandText = " SELECT* FROM `users` WHERE `name` LIKE '1' AND `pasword` LIKE '1'";
+            try
+            {
+                con.Open();
+                MySqlDataReader res = comand.ExecuteReader();
 
+                if (res.Read())
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+
+            }
+            catch (Exception e)
+            {
+
+                return false;
+
+            }
+
+            con.Close();
+
+        }
 
 
 
