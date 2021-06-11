@@ -19,13 +19,15 @@ namespace GetNewGamesAPI.Controllers
             return new SaleRepositorio().Retrive();
         }
 
-   
-        public string Get(int id)
+
+        [HttpGet]
+        [Route("api/Sale/Get/{id}")]
+        public IEnumerable<Sale> Get(int id)
         {
-            return "value";
+            return new SaleRepositorio().Retrive2(id);
         }
 
-       
+
         public void Post([FromBody]string value)
         {
         }

@@ -61,7 +61,7 @@ namespace GetNewGamesAPI.Models
             List<Game> mercados = new List<Game>();
             MySqlConnection con = Connect();
             MySqlCommand comand = con.CreateCommand();
-            comand.CommandText = "SELECT* FROM `games` WHERE `USUARIO_EMAIL` = '" + id + "'";
+            comand.CommandText = "SELECT * FROM `games` WHERE `USUARIO_EMAIL` = '" + id + "'";
             Game ap = null;
             try
             {

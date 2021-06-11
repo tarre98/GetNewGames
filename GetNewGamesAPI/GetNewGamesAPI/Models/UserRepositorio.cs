@@ -92,8 +92,9 @@ namespace GetNewGamesAPI.Models
         {
             List<User> mercados = new List<User>();
             MySqlConnection con = Connect();
-            MySqlCommand comand = con.CreateCommand();
-            comand.CommandText = "SELECT* FROM `User` WHERE `USUARIO_EMAIL` = '"+id+"'";
+            MySqlCommand comand = con.CreateCommand();        
+            comand.CommandText = "  SELECT * FROM `users` WHERE `iduser` = "+id;
+            // comand.CommandText = "SELECT * FROM `User` WHERE `iduser` LIKE '"+id+"'";
             User ap = null;
             try
             {

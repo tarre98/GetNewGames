@@ -19,9 +19,11 @@ namespace GetNewGamesAPI.Controllers
             return new GameRepositorio().Retrive();
         }
 
-        public string Get(int id)
+        [HttpGet]
+        [Route("api/Game/Get/{id}")]
+        public IEnumerable<Game> Get(int id)
         {
-            return "value";
+            return new GameRepositorio().Retrive2(id);
         }
 
         public void Post([FromBody]string value)
