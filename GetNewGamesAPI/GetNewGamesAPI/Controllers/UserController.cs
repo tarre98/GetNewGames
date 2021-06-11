@@ -1,4 +1,5 @@
-﻿using GetNewGamesAPI.Models;
+﻿
+using GetNewGamesAPI.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,12 +23,14 @@ namespace GetNewGamesAPI.Controllers
         }
 
         [HttpGet]
-        [ActionName("log")]
-        public bool log()
+        [Route("api/User/Log/{user}/{pass}")]
+  
+        public bool log(string user,string pass)
         {
-            return new UserRepositorio().log();
+            return new UserRepositorio().log(user, pass);
         }
- 
+
+
         public string Get(int id)
         {
             return "value";
