@@ -30,11 +30,10 @@ namespace GetNewGamesAPI.Controllers
             return new UserRepositorio().log(user, pass);
         }
 
-        [HttpGet]
-        [Route("api/User/Get/{id}")]
-        public IEnumerable<User> Get(int id)
+
+        public string Get(int id)
         {
-            return new UserRepositorio().Retrive2(id);
+            return "value";
         }
 
 
