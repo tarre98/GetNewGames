@@ -52,17 +52,18 @@ namespace GetNewGamesAPI.Models
         }
         internal List<Sale> RetriveByU(int id)
         {
+            
             List<Sale> mercados = new List<Sale>();
             MySqlConnection con = Connect();
             MySqlCommand comand = con.CreateCommand();
-            comand.CommandText = "SELECT * FROM sales WHERE Users_iduser = '" + id + "'";
+            comand.CommandText = "SELECT * FROM `sales` WHERE `Users_iduser` = " + id ;
             Sale ap = null;
             try
             {
                 con.Open();
                 MySqlDataReader res = comand.ExecuteReader();
 
-                if (res.Read())
+                while (res.Read())
                 {
                     ap = new Sale(res.GetInt32(0), res.GetInt32(1), res.GetInt32(2), res.GetDecimal(3), res.GetString(4), res.GetInt32(5));
                     mercados.Add(ap);
@@ -170,7 +171,7 @@ namespace GetNewGamesAPI.Models
             List<Sale> mercados = new List<Sale>();
             MySqlConnection con = Connect();
             MySqlCommand comand = con.CreateCommand();
-            comand.CommandText = "SELECT* FROM `Sale` WHERE `USUARIO_EMAIL` = '" + id + "'";
+            comand.CommandText = "SELECT* FROM `Sale` WHERE `Users_iduser` = '" + id + "'";
             Sale ap = null;
             try
             {
