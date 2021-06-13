@@ -26,7 +26,7 @@
         <ion-button (click)="registroVisibility()" >Registro</ion-button>
 
     </ion-item>
-
+  
   </div> 
       <strong *ngIf="registro == true">Registro</strong>
 
@@ -36,41 +36,61 @@
       </ion-item>
 
       <ion-item *ngIf="registro == true">
-
-        <ion-label position="floating">Nombre</ion-label>
-        <ion-input [(ngModel)]="nombreRegistro"></ion-input>
-      </ion-item>
-
-      <ion-item *ngIf="registro == true">
-
+  
         <ion-label position="floating">PassWord</ion-label>
         <ion-input [(ngModel)]="pwdRegistro"></ion-input>
       </ion-item>
 
-  
       <ion-item *ngIf="registro == true">
-
+  
+        <ion-label position="floating">Nombre</ion-label>
+        <ion-input [(ngModel)]="nombreRegistro"></ion-input>
+      </ion-item>
+      <ion-item *ngIf="registro == true">
+  
+        <ion-label position="floating">Email</ion-label>
+        <ion-input [(ngModel)]="emailRegistro"></ion-input>
+      </ion-item>
+      <ion-item *ngIf="registro == true">
+  
+        <ion-label position="floating">Apellido</ion-label>
+        <ion-input [(ngModel)]="apellidoRegistro"></ion-input>
+      </ion-item>
+      <ion-item *ngIf="registro == true">
+  
+        <ion-label position="floating">Edad</ion-label>
+        <ion-input [(ngModel)]="edadRegistro"></ion-input>
+      </ion-item>
+      <ion-item *ngIf="registro == true">
+  
+        <ion-label position="floating">NumCuenta</ion-label>
+        <ion-input [(ngModel)]="numcuentaRegistro"></ion-input>
+      </ion-item>
+      
+      
+      <ion-item *ngIf="registro == true">
+  
         <ion-button  (click)="makeAdmin()" >Make Admin</ion-button>
         <ion-button   (click)="makeNoAdmin()" >No admin</ion-button>
 
       </ion-item>
-
+     
       <ion-item *ngIf="registro == true">
         <ion-button  (click)="insertUser()" >Registrar</ion-button>
 
       </ion-item>
+      
 
+    
+  
 
-
-
-
-
+    
 
  
   <div  *ngIf="match == true"> 
 
     <ion-item >
-      <ion-button [routerLink]="['/games/',useridInput]">Gestion Videojuegos</ion-button>
+      <ion-button [routerLink]="['/games/',useridInput]">Gestion Libros</ion-button>
 
   </ion-item>
   <ion-item >

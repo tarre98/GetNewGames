@@ -43,6 +43,7 @@ export class GamesPage implements OnInit {
   userLogin: any;
   useridLogin: any;
   plataformaInput: string;
+  dineroGastado: any;
 
   constructor(private _toastCtrl: ToastController, private _activateRoute: ActivatedRoute) {
 
@@ -212,9 +213,10 @@ export class GamesPage implements OnInit {
       response.data.forEach(element => {
         this.userLogin = element
       });
-      this.useridLogin = this.userLogin.userId
+      this.useridLogin = this.userLogin.iduser
+      this.dineroGastado = this.userLogin.dineroGastado
 
-        await axios.post("https://localhost:44303/api/Sale/post", {
+        await axios.post("https://localhost:44303/api/Sale/Post", {
 
           "idsale": 1,
           "iduser": this.useridLogin,
@@ -225,6 +227,9 @@ export class GamesPage implements OnInit {
 
 
         }, { headers: { 'Access-Control-Allow-Origin': '*' } });
+        console.log("https://localhost:44303/api/User/Put/"+((this.cantidad*this.Game.precio)+this.dineroGastado)+"/"+this.useridLogin);
+        
+        axios.get("https://localhost:44303/api/User/Put/"+((this.cantidad*this.Game.precio)+this.dineroGastado)+"/"+this.useridLogin,{ headers: { 'Access-Control-Allow-Origin': '*' }})
         this.errorMessage = "Compra Realizada"
         this.presentToast()
         this.visibleDetails = false

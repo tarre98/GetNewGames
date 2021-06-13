@@ -9,9 +9,8 @@ import axios from 'axios';
 })
 export class HomePage {
 
-
   useridInput: string;
-  isAdmin: any;
+  isAdmin: boolean;
   useridPass: string;
   pwdInput: string;
   match = false
@@ -27,6 +26,10 @@ export class HomePage {
   Users = [];
   userLogin: any;
   admin=0;
+  apellidoRegistro: any;
+  emailRegistro: any;
+  edadRegistro: any;
+  numcuentaRegistro: any;
   constructor(private _toastCtrl: ToastController) { }
 
   ngOnInit() {
@@ -97,18 +100,34 @@ export class HomePage {
 
   }
   async insertUser(){
-    if( this.userIdRegistro==null || this.pwdRegistro==null ||this.nombreRegistro==null){
+
+    if( this.userIdRegistro==null || this.pwdRegistro==null ||this.nombreRegistro==null ||this.apellidoRegistro==null ||this.emailRegistro==null ||this.edadRegistro==null ||this.numcuentaRegistro==null){
       this.errorMessage = "Falta algun campo"
         this.presentToast()
     }else{
+      console.log({"iduser":this.userIdRegistro,
+          "name": this.nombreRegistro,
+          "pasword": this.pwdRegistro,
+          "admin": this.admin,
+          "apellido": this.apellidoRegistro,
+          "email": this.emailRegistro,
+          "edad":  this.edadRegistro,
+          "numCuenta": this.numcuentaRegistro,
+          "dineroGastado": 0.0});
+      
       try {
 
         await axios.post("https://localhost:44303/api/User/post", {
   
-          "iduser": this.userIdRegistro,
+          "iduser":this.userIdRegistro,
           "name": this.nombreRegistro,
           "pasword": this.pwdRegistro,
-          "admin": this.admin
+          "admin": this.admin,
+          "apellido": this.apellidoRegistro,
+          "email": this.emailRegistro,
+          "edad":  this.edadRegistro,
+          "numCuenta": this.numcuentaRegistro,
+          "dineroGastado": 0.0
   
         }, { headers: { 'Access-Control-Allow-Origin': '*' } });
         this.errorMessage = "Registro Realizada"
@@ -120,13 +139,6 @@ export class HomePage {
         console.error(error);
       }
     }
-   
-
-
-
-
-
-
   }
   makeAdmin(){
     this.admin=1
