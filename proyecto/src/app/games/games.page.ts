@@ -35,13 +35,14 @@ export class GamesPage implements OnInit {
   booksMine = false
   contador: number;
   Game: any;
+  nameInput: any;
   visibleDetails: boolean;
   cantidad: any;
   errorMessage: string
   isAdmin1: any;
   userLogin: any;
   useridLogin: any;
-
+  plataformaInput: string;
 
   constructor(private _toastCtrl: ToastController, private _activateRoute: ActivatedRoute) {
 
@@ -96,6 +97,47 @@ export class GamesPage implements OnInit {
 
   }
 
+  async nameFilter(){
+    this.Games=[]
+    try {
+      const response = await axios.get("https://localhost:44303/api/GamesName/Get/"+this.nameInput, { headers: { 'Access-Control-Allow-Origin': '' } });
+
+      console.log(response.data);
+      response.data.forEach(element => {
+        this.Games.push(element)
+      });
+
+
+
+      } catch (error) {
+        console.error(error);
+      }
+
+
+
+  } 
+  async plataformaFilter(){
+    this.Games=[]
+    console.log("https://localhost:44303/api/GamesPlataform/Get/"+this.plataformaInput);
+    try {
+      const response = await axios.get("https://localhost:44303/api/GamesPlataform/Get/"+this.plataformaInput, { headers: { 'Access-Control-Allow-Origin': '' } });
+      console.log(response.data);
+      response.data.forEach(element => {
+        this.Games.push(element)
+      });
+
+
+
+
+      } catch (error) {
+        console.error(error);
+      }
+
+
+
+  }
+
+
   async allBooks() {
     this.booksMine = false;
     this.Games = []
@@ -141,6 +183,9 @@ export class GamesPage implements OnInit {
 
 
   }
+
+
+  
   async makePurchaseNacional() {
     this.envio = "Nacional"
     if (this.cantidad == null) {

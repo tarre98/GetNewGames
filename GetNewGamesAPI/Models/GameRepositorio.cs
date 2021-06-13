@@ -83,28 +83,59 @@ namespace GetNewGamesAPI.Models
             return mercados;
         }
 
-
-        /*
-
-        internal void Save(Game a)
+        internal List<Game> Retrive3(string id)
         {
-            //Game a = new Game(23, "2020-11-05 12:22:54", 1, 23, "123", "123");
+            List<Game> mercados = new List<Game>();
             MySqlConnection con = Connect();
-            MySqlCommand command = con.CreateCommand();
-            command.CommandText = "INSERT INTO `Game` (`idGame`, `name`, `pasword`, `admin`) VALUES ('" + a.idGame + "' , '" + a.name + "' ,'" + a.pasword + "' ,'" + a.admin + "' );";
-
+            MySqlCommand comand = con.CreateCommand();
+            comand.CommandText = "SELECT * FROM `games` WHERE `plataforma` LIKE '" + id + "'";
+            Game ap = null;
             try
             {
                 con.Open();
-                command.ExecuteNonQuery();
-                con.Close();
+                MySqlDataReader res = comand.ExecuteReader();
+
+                while (res.Read())
+                {
+                    ap = new Game(res.GetInt32(0), res.GetString(1), res.GetString(2), res.GetString(3), res.GetString(4), res.GetDecimal(5), res.GetDecimal(6), res.GetDecimal(7));
+                    mercados.Add(ap);
+                }
+
             }
             catch (Exception e)
             {
-                Debug.WriteLine("Error Insert Game");
             }
+
+            con.Close();
+            return mercados;
         }
 
-    */
+        internal List<Game> Retrive4(string id)
+        {
+            List<Game> mercados = new List<Game>();
+            MySqlConnection con = Connect();
+            MySqlCommand comand = con.CreateCommand();
+            comand.CommandText = "SELECT * FROM `games` WHERE `nombre` LIKE '" + id + "'";
+            Game ap = null;
+            try
+            {
+                con.Open();
+                MySqlDataReader res = comand.ExecuteReader();
+
+                while (res.Read())
+                {
+                    ap = new Game(res.GetInt32(0), res.GetString(1), res.GetString(2), res.GetString(3), res.GetString(4), res.GetDecimal(5), res.GetDecimal(6), res.GetDecimal(7));
+                    mercados.Add(ap);
+                }
+
+            }
+            catch (Exception e)
+            {
+            }
+
+            con.Close();
+            return mercados;
+        }
+
     }
 }

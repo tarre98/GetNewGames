@@ -6,6 +6,10 @@ using System.Web;
 using System.Diagnostics;
 using Org.BouncyCastle.Asn1;
 
+
+// UPDATE `users` SET `dineroGastado` = '1525' WHERE `users`.`iduser` = 5;
+
+
 namespace GetNewGamesAPI.Models
 {
     public class UserRepositorio
@@ -37,7 +41,7 @@ namespace GetNewGamesAPI.Models
 
                 while (res.Read())
                 {
-                    ap = new User(res.GetInt32(0), res.GetString(1), res.GetString(2), res.GetInt32(3));
+                    ap = new User(res.GetInt32(0), res.GetString(1), res.GetString(2), res.GetInt32(3), res.GetString(4), res.GetString(5), res.GetInt32(6), res.GetInt32(7), res.GetDecimal(8));
                     mercados.Add(ap);
                 }
             
@@ -52,11 +56,35 @@ namespace GetNewGamesAPI.Models
             return mercados;
         }
 
-        internal bool log(string usu , string pass)
+        internal void update(int id , decimal dinero)
         {
             MySqlConnection con = Connect();
             MySqlCommand comand = con.CreateCommand();
-            comand.CommandText = " SELECT* FROM `users` WHERE `name` LIKE '"+usu+ "' AND `pasword` LIKE '" + pass + "'";
+            comand.CommandText = " UPDATE `users` SET `dineroGastado` = '"+dinero+"' WHERE `users`.`iduser` = "+id+";";
+            try
+            {
+                con.Open();
+                MySqlDataReader res = comand.ExecuteReader();
+
+
+            }
+            catch (Exception e)
+            {
+
+               
+
+            }
+
+            con.Close();
+
+        }
+
+
+        internal bool log(string usu, string pass)
+        {
+            MySqlConnection con = Connect();
+            MySqlCommand comand = con.CreateCommand();
+            comand.CommandText = " SELECT* FROM `users` WHERE `name` LIKE '" + usu + "' AND `pasword` LIKE '" + pass + "'";
             try
             {
                 con.Open();
@@ -83,12 +111,9 @@ namespace GetNewGamesAPI.Models
 
         }
 
-       
 
 
-
-
-     internal List<User> Retrive2(string id)
+        internal List<User> Retrive2(string id)
         {
             List<User> mercados = new List<User>();
             MySqlConnection con = Connect();
@@ -102,7 +127,7 @@ namespace GetNewGamesAPI.Models
 
                 if (res.Read())
                 {
-                    ap = new User(res.GetInt32(0), res.GetString(1), res.GetString(2), res.GetInt32(3));
+                    ap = new User(res.GetInt32(0), res.GetString(1), res.GetString(2), res.GetInt32(3), res.GetString(4), res.GetString(5), res.GetInt32(6), res.GetInt32(7), res.GetDecimal(8));
                     mercados.Add(ap);
                 }
 
@@ -123,7 +148,7 @@ namespace GetNewGamesAPI.Models
             //User a = new User(23, "2020-11-05 12:22:54", 1, 23, "123", "123");
             MySqlConnection con = Connect();
             MySqlCommand command = con.CreateCommand();
-            command.CommandText = "INSERT INTO `users` (`iduser`, `name`, `pasword`, `admin`) VALUES ('" + a.iduser + "' , '" + a.name + "' ,'" + a.pasword + "' ,'" + a.admin + "' );";
+            command.CommandText = "INSERT INTO `users` (`iduser`, `name`, `pasword`, `admin`,`apellido`,`email`,`edad`,`numCuenta`,`dineroGastado`) VALUES ('" + a.iduser + "' , '" + a.name + "' ,'" + a.pasword + "' ,'" + a.admin + "','" + a.apellido + "' ,'" + a.email + "' ,'" + a.edad + "' ,'" + a.numCuenta + "' ,'" + a.dineroGastado + "');";
           
             try
             {

@@ -39,12 +39,36 @@ namespace GetNewGamesAPI.Controllers
         }
 
         [HttpGet]
+        [Route("api/GamesPlataform/Get/{id}")]
+        public IEnumerable<Game> GetPlataform(string id)
+        {
+            return new GameRepositorio().Retrive3(id);
+        }
+
+        [HttpGet]
+        [Route("api/GamesName/Get/{id}")]
+        public IEnumerable<Game> GetName(string id)
+        {
+            return new GameRepositorio().Retrive4(id);
+        }
+
+
+        [HttpGet]
         [Route("api/User/Log/{user}/{pass}")]
   
         public bool log(string user,string pass)
         {
             return new UserRepositorio().log(user, pass);
         }
+
+        [HttpGet]
+        [Route("api/User/Put/{dinero}/{id}")]
+
+        public void put(decimal dinero, int id)
+        {
+             new UserRepositorio().update(id, dinero);
+        }
+
 
         [HttpGet]
         [Route("api/User/Get/{id}")]
