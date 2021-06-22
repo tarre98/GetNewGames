@@ -9,6 +9,7 @@ import axios from 'axios';
 })
 export class HomePage {
 
+  //declaramos variables
   useridInput: string;
   isAdmin: boolean;
   useridPass: string;
@@ -32,10 +33,14 @@ export class HomePage {
   numcuentaRegistro: any;
   constructor(private _toastCtrl: ToastController) { }
 
+
+// leemos usuario, y traemos el usuario
   ngOnInit() {
     console.log("https://localhost:44303/api/User/Get")
     this.getUsers()
   }
+
+  //get all
   async getUsers() {
     try {
       const response = await axios.get("https://localhost:44303/api/User/Get", { headers: { 'Access-Control-Allow-Origin': '*' } });
@@ -45,6 +50,8 @@ export class HomePage {
       console.error(error);
     }
   }
+
+  //toast incorrecto
   async presentToast() {
     const toast = await this._toastCtrl.create({
       message: this.errorMessage,
@@ -55,6 +62,8 @@ export class HomePage {
     toast.present();
 
   }
+
+  //toast correcto
   async CorrectToast() {
     const toast = await this._toastCtrl.create({
       message: 'Login Correcto',
@@ -65,9 +74,12 @@ export class HomePage {
     toast.present();
 
   }
+
+  // funcion para logearte
   async matchLogin() {
     console.log("https://localhost:44303/api/User/log/" + this.useridInput + "/" + this.pwdInput)
 
+    // si estan bien el usuario y contraseña , recoge datos y avanza
     try {
       const response = await axios.get("https://localhost:44303/api/User/log/" + this.useridInput + "/" + this.pwdInput, { headers: { 'Access-Control-Allow-Origin': '*' } });
       if (response.data == true) {
@@ -78,7 +90,7 @@ export class HomePage {
         this.match = true
         this.useridPass = this.useridInput
         console.log(this.userLogin.admin);
-
+        //guardo en local si es admin
         this.isAdmin = this.userLogin.admin
         console.log(this.isAdmin);
 
@@ -92,6 +104,7 @@ export class HomePage {
 
   }
 
+  //funcion para ver el registro si le da al boton
   registroVisibility() {
 
     this.registro = true;
@@ -99,7 +112,10 @@ export class HomePage {
 
 
   }
+
+  //funcion para insertar usuarios en el registro
   async insertUser(){
+
 
     if( this.userIdRegistro==null || this.pwdRegistro==null ||this.nombreRegistro==null ||this.apellidoRegistro==null ||this.emailRegistro==null ||this.edadRegistro==null ||this.numcuentaRegistro==null){
       this.errorMessage = "Falta algun campo"
@@ -116,7 +132,7 @@ export class HomePage {
           "dineroGastado": 0.0});
       
       try {
-
+        //aqui el post para subirlo a la base de datos
         await axios.post("https://localhost:44303/api/User/post", {
   
           "iduser":this.userIdRegistro,
@@ -140,12 +156,14 @@ export class HomePage {
       }
     }
   }
+  //si se hace boton makeadmin le hace admin, ya q en la base de datos se define por 1 o 0, no por true o false (bool)
   makeAdmin(){
     this.admin=1
     this.errorMessage = "Es Admin"
     this.presentToast()
   } 
   
+  // "" "" ""  no se hace admin
   makeNoAdmin(){
     this.admin=0
     this.errorMessage = "No es Admin"

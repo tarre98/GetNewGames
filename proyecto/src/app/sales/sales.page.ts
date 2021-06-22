@@ -7,7 +7,11 @@ import axios from 'axios';
   templateUrl: './sales.page.html',
   styleUrls: ['./sales.page.scss'],
 })
+
+
 export class SalesPage implements OnInit {
+
+  //declaramos variables
   isAdmin1: any;
   userIdInput
   sales = []
@@ -18,11 +22,15 @@ export class SalesPage implements OnInit {
   constructor(private _activateRoute: ActivatedRoute) { }
 
   ngOnInit() {
+    //recoge dato de si es admin o no, para acceder a ver la info
+    // recoge todas las ventas
     this.isAdmin1 = this._activateRoute.snapshot.paramMap.get('isAdmin');
     console.log(this.isAdmin1);
     this.allBooks()
 
   }
+
+  //get de todas las ventas
   async allBooks() {
     try {
       const response = await axios.get("https://localhost:44303/api/Sale/Get", { headers: { 'Access-Control-Allow-Origin': '*' } });
@@ -36,6 +44,8 @@ export class SalesPage implements OnInit {
     }
 
   }
+
+  //filtro para buscar por userid 
   async userIdFilter() {
     this.sales = []
     try {
@@ -54,6 +64,7 @@ export class SalesPage implements OnInit {
 
   }
 
+  //filtro para buscar si es nacional
   async EnvioNacionalFilter() {
     this.sales = []
 
@@ -71,6 +82,8 @@ export class SalesPage implements OnInit {
 
 
   }
+
+  //filtro para buscar si es internacional
   async EnvioInternacionalFilter() {
     this.sales = []
 
@@ -88,6 +101,8 @@ export class SalesPage implements OnInit {
 
 
   }
+
+  //filtro para buscar por precio
   async PriceFilter() {
     this.sales = []
 
@@ -105,6 +120,8 @@ export class SalesPage implements OnInit {
 
 
   }
+
+  //recarga pagina
   reloadPage(){
     location.reload()
   }

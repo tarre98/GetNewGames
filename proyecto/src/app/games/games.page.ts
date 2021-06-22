@@ -10,6 +10,9 @@ import axios from 'axios';
 })
 export class GamesPage implements OnInit {
 
+  //declarar variables
+//  #region
+
   userid
   envio = ""
   Games = [];
@@ -45,65 +48,34 @@ export class GamesPage implements OnInit {
   plataformaInput: string;
   dineroGastado: any;
 
+ // #endregion
+
   constructor(private _toastCtrl: ToastController, private _activateRoute: ActivatedRoute) {
 
 
   }
 
   ngOnInit() {
+    //traemos todos los libros y el id de user (por la url)
     this.allBooks()
     this.userid = this._activateRoute.snapshot.paramMap.get('useridInput');
 
 
   }
 
-  updateBook(key) {
 
-
-    this.Games.forEach(libro => {
-      if (libro.key == key) {
-
-
-        this.titulo = libro.titulo
-        this.idLibro = libro.idLibro
-        this.categoria = libro.categoria
-        this.editorial = libro.editorial
-        this.propietario = libro.propietario
-        this.lugarRecogida = libro.lugar_Recogida
-        console.log(this.titulo)
-
-      }
-    })
-    this.visibleMenu = false;
-    this.visibleUpdate = true;
-
-
-    console.log("he entrado")
-
-  }
-
-  changeVisibilityMenuInput() {
-
-
-    this.visibleInput = true;
-    this.visibleMenu = false;
-    if (this.visibleMenu == false) {
-      this.visibleInput = false;
-      this.visibleMenu = true;
-      location.reload();
-    }
-    this.contador++
-
-
-
-  }
-
+  // FILTRO POR NOMBRE
   async nameFilter(){
+    //declaramos lista vacia
     this.Games=[]
     try {
+      //await(en funcion) = async (en clase)
+      //axios = libreria para conexion con sql
+      // filtro donde con la url + el input para buscar, y el header siempre es el mismo (abre puertas para que se conecte cualquier como en clase)
       const response = await axios.get("https://localhost:44303/api/GamesName/Get/"+this.nameInput, { headers: { 'Access-Control-Allow-Origin': '' } });
 
       console.log(response.data);
+      //todos los juegos con ese nombre los guarda en la lista de games para mostrar
       response.data.forEach(element => {
         this.Games.push(element)
       });
@@ -117,6 +89,8 @@ export class GamesPage implements OnInit {
 
 
   } 
+
+  // FILTRO POR PLATAFORMA
   async plataformaFilter(){
     this.Games=[]
     console.log("https://localhost:44303/api/GamesPlataform/Get/"+this.plataformaInput);
@@ -138,9 +112,8 @@ export class GamesPage implements OnInit {
 
   }
 
-
+  //filtro para hacer un get de todo
   async allBooks() {
-    this.booksMine = false;
     this.Games = []
     try {
       const response = await axios.get("https://localhost:44303/api/User/Getgame", { headers: { 'Access-Control-Allow-Origin': '*' } });
@@ -154,6 +127,8 @@ export class GamesPage implements OnInit {
     }
 
   }
+
+  //TOAST
   async presentToast() {
     const toast = await this._toastCtrl.create({
       message: this.errorMessage,
@@ -165,6 +140,7 @@ export class GamesPage implements OnInit {
 
   }
 
+  // filtro por nombre del juego, para ver sus detalles
   async gameDetail(gameID) {
     this.visibleDetails = true
     this.visibleMenu = false
@@ -186,13 +162,14 @@ export class GamesPage implements OnInit {
   }
 
 
-  
+  // hacer  la compra es nacional
   async makePurchaseNacional() {
     this.envio = "Nacional"
+    // si los campos vicios , no funciona
     if (this.cantidad == null) {
       this.errorMessage = "has de introducir una cantidad"
       this.presentToast()
-
+      // si..
     } else {
       console.log({
 
@@ -206,6 +183,7 @@ export class GamesPage implements OnInit {
 
       });
       
+      //me conecto al usuario que esta logeado
       try {
         const response = await axios.get("https://localhost:44303/api/User/Get/" + this.userid, { headers: { 'Access-Control-Allow-Origin': '*' } });
       console.log(response.data);
@@ -213,9 +191,11 @@ export class GamesPage implements OnInit {
       response.data.forEach(element => {
         this.userLogin = element
       });
+      //guardamos variables de bd a local
       this.useridLogin = this.userLogin.iduser
       this.dineroGastado = this.userLogin.dineroGastado
-
+      
+      // post donde agregamos la nueva compra 
         await axios.post("https://localhost:44303/api/Sale/Post", {
 
           "idsale": 1,
@@ -229,6 +209,7 @@ export class GamesPage implements OnInit {
         }, { headers: { 'Access-Control-Allow-Origin': '*' } });
         console.log("https://localhost:44303/api/User/Put/"+((this.cantidad*this.Game.precio)+this.dineroGastado)+"/"+this.useridLogin);
         
+        // para comprobar el dinero gastado,ya que varia si es envio internacional o nacional
         axios.get("https://localhost:44303/api/User/Put/"+((this.cantidad*this.Game.precio)+this.dineroGastado)+"/"+this.useridLogin,{ headers: { 'Access-Control-Allow-Origin': '*' }})
         this.errorMessage = "Compra Realizada"
         this.presentToast()
@@ -241,6 +222,7 @@ export class GamesPage implements OnInit {
     }
   }
 
+  // LO MISMO, PERO ENVIO INTERNACIONAL
   async makePurchaseInternacional() {
     this.envio = "Internacional"
     if (this.cantidad == null) {
