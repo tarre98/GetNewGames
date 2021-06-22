@@ -10,22 +10,25 @@ using System.Web.Http.Cors;
 namespace GetNewGamesAPI.Controllers
 {
     
-
+    //generamos rutas que establecer
     [Route("api/Game/{action}")]
     public class GameController : ApiController
     {
-
+        //ruta general para leer todo
         [HttpGet]
         [ActionName("Get")]
         public IEnumerable<Game> Get()
         {
+            //se usa en el metodo de retrive
             return new GameRepositorio().Retrive();
         }
 
+        //filtro para buscar por id
         [HttpGet]
         [Route("api/Game/Get/{id}")]
         public IEnumerable<Game> Get(int id)
         {
+            //se usa en el metodo de retrive2
             return new GameRepositorio().Retrive2(id);
         }
 

@@ -9,7 +9,7 @@ namespace GetNewGamesAPI.Models
     public class SaleRepositorio
     {
 
-
+        //conexion base de datos
         private MySqlConnection Connect()
         {
             string server = "server=127.0.0.1;";
@@ -22,6 +22,8 @@ namespace GetNewGamesAPI.Models
             MySqlConnection con = new MySqlConnection(connString);
             return con;
         }
+
+        //GET DE TODAS LAS VENTAS
         internal List<Sale> Retrive()
         {
             List<Sale> mercados = new List<Sale>();
@@ -50,6 +52,8 @@ namespace GetNewGamesAPI.Models
             con.Close();
             return mercados;
         }
+
+        // Filtro por id de Usuario
         internal List<Sale> RetriveByU(int id)
         {
             
@@ -77,6 +81,8 @@ namespace GetNewGamesAPI.Models
             con.Close();
             return mercados;
         }
+
+        //FILTRO POR SOLO BUSQUEDA DE LOS QUE SEAN EN LA VARIABLE TIPOENVIO "NACIONAL"
         internal List<Sale> RetriveN()
         {
             List<Sale> mercados = new List<Sale>();
@@ -106,6 +112,7 @@ namespace GetNewGamesAPI.Models
             return mercados;
         }
 
+        //FILTRO POR SOLO BUSQUEDA DE LOS QUE SEAN EN LA VARIABLE TIPOENVIO "INTERNACIONAL"
         internal List<Sale> RetriveI()
         {
             List<Sale> mercados = new List<Sale>();
@@ -135,9 +142,9 @@ namespace GetNewGamesAPI.Models
             return mercados;
         }
 
-        //SELECT * FROM sales WHERE Games_idGames = 1
 
 
+        //FILTRO POR EL ID DE EL JUEGO 
         internal List<Sale> RetriveByG(int id)
         {
             List<Sale> mercados = new List<Sale>();
@@ -166,6 +173,7 @@ namespace GetNewGamesAPI.Models
         }
 
 
+        //FILTRO POR EL ID DE USUARIO
         internal List<Sale> Retrive2(int id)
         {
             List<Sale> mercados = new List<Sale>();
@@ -193,11 +201,13 @@ namespace GetNewGamesAPI.Models
             return mercados;
         }
 
+        //filtro por parametros de precio (según entre p1 y p2 busca)
         internal List<Sale> RetriveP(int p1, int p2)
         {
             List<Sale> mercados = new List<Sale>();
             MySqlConnection con = Connect();
             MySqlCommand comand = con.CreateCommand();
+            //BETWEEN P1 Y P2
             comand.CommandText = "SELECT * FROM `sales` WHERE `precioTotal` BETWEEN " + p1 + " AND " + p2;
             Sale ap = null;
             try
@@ -221,6 +231,7 @@ namespace GetNewGamesAPI.Models
         }
 
 
+        // (POST) SUBIMOS LAS NUEVAS VARIABLES DE "Sale a" 
         internal void Save(Sale a)
         {
 

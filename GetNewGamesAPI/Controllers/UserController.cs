@@ -16,7 +16,7 @@ namespace GetNewGamesAPI.Controllers
     public class UserController : ApiController
     {
 
-
+        //get all
         [HttpGet]
         [ActionName("Get")]
         public IEnumerable<User> Get()
@@ -24,6 +24,7 @@ namespace GetNewGamesAPI.Controllers
             return new UserRepositorio().Retrive();
         }
 
+        //get games desde aqui, porq borre el enablecors de game (no funcionaba la api), y lo he puesto aaqui
         [HttpGet]
         [ActionName("Getgame")]
         public IEnumerable<Game> GetGame()
@@ -31,6 +32,7 @@ namespace GetNewGamesAPI.Controllers
             return new GameRepositorio().Retrive();
         }
 
+        //get games de id
         [HttpGet]
         [Route("api/Games/Get/{id}")]
         public IEnumerable<Game> Get(int id)
@@ -38,6 +40,7 @@ namespace GetNewGamesAPI.Controllers
             return new GameRepositorio().Retrive2(id);
         }
 
+        //get game de plataforma de games
         [HttpGet]
         [Route("api/GamesPlataform/Get/{id}")]
         public IEnumerable<Game> GetPlataform(string id)
@@ -45,6 +48,7 @@ namespace GetNewGamesAPI.Controllers
             return new GameRepositorio().Retrive3(id);
         }
 
+        //get de nombre juegos
         [HttpGet]
         [Route("api/GamesName/Get/{id}")]
         public IEnumerable<Game> GetName(string id)
@@ -52,7 +56,7 @@ namespace GetNewGamesAPI.Controllers
             return new GameRepositorio().Retrive4(id);
         }
 
-
+        // comprueba si es true o false el login
         [HttpGet]
         [Route("api/User/Log/{user}/{pass}")]
   
@@ -61,6 +65,7 @@ namespace GetNewGamesAPI.Controllers
             return new UserRepositorio().log(user, pass);
         }
 
+        // actualiza dinero total
         [HttpGet]
         [Route("api/User/Put/{dinero}/{id}")]
 
@@ -69,7 +74,7 @@ namespace GetNewGamesAPI.Controllers
              new UserRepositorio().update(id, dinero);
         }
 
-
+        // filtro por id user
         [HttpGet]
         [Route("api/User/Get/{id}")]
         public IEnumerable<User> Get(string id)
@@ -77,11 +82,9 @@ namespace GetNewGamesAPI.Controllers
             return new UserRepositorio().Retrive2(id);
         }
 
-
+        // post de user
         [HttpPost]
         [ActionName("post")]
-
-
 
         public void Post([FromBody] User value)
         {

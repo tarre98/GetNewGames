@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
+// MOLDE DE SALE 
 namespace GetNewGamesAPI.Models
 {
     public class Sale

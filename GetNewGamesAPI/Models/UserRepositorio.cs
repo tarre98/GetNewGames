@@ -7,7 +7,7 @@ using System.Diagnostics;
 using Org.BouncyCastle.Asn1;
 
 
-// UPDATE `users` SET `dineroGastado` = '1525' WHERE `users`.`iduser` = 5;
+
 
 
 namespace GetNewGamesAPI.Models
@@ -15,6 +15,7 @@ namespace GetNewGamesAPI.Models
     public class UserRepositorio
     {
 
+        //conexion base de datos
         private MySqlConnection Connect()
         {
             string server = "server=127.0.0.1;";
@@ -27,6 +28,8 @@ namespace GetNewGamesAPI.Models
             MySqlConnection con = new MySqlConnection(connString);
             return con;
         }
+
+        // GET DE TODOS LOS USERS
         internal List<User> Retrive()
         {
             List<User> mercados = new List<User>();
@@ -56,10 +59,12 @@ namespace GetNewGamesAPI.Models
             return mercados;
         }
 
+        // UPDATE DINERO GASTADO
         internal void update(int id , decimal dinero)
         {
             MySqlConnection con = Connect();
             MySqlCommand comand = con.CreateCommand();
+            //SE MODIFICA EL DINERO GASTADO DEL USUARIO QUE LLEVA ESA ID
             comand.CommandText = " UPDATE `users` SET `dineroGastado` = '"+dinero+"' WHERE `users`.`iduser` = "+id+";";
             try
             {
@@ -79,11 +84,12 @@ namespace GetNewGamesAPI.Models
 
         }
 
-
+        //LOGIN 
         internal bool log(string usu, string pass)
         {
             MySqlConnection con = Connect();
             MySqlCommand comand = con.CreateCommand();
+            //PASAS USUARIO Y CONTRASEÑA A LA LLAMADA, Y SI ES TRUE ENTRA (se pasan los datos)
             comand.CommandText = " SELECT* FROM `users` WHERE `name` LIKE '" + usu + "' AND `pasword` LIKE '" + pass + "'";
             try
             {
@@ -112,7 +118,7 @@ namespace GetNewGamesAPI.Models
         }
 
 
-
+        // FILTRO POR NOMBRE 
         internal List<User> Retrive2(string id)
         {
             List<User> mercados = new List<User>();
@@ -142,12 +148,13 @@ namespace GetNewGamesAPI.Models
 
         
 
-     
+        //POST (registro)
         internal void Save(User a)
         {
-            //User a = new User(23, "2020-11-05 12:22:54", 1, 23, "123", "123");
+          
             MySqlConnection con = Connect();
             MySqlCommand command = con.CreateCommand();
+            //añade el usuario que cumple las variables de user a
             command.CommandText = "INSERT INTO `users` (`iduser`, `name`, `pasword`, `admin`,`apellido`,`email`,`edad`,`numCuenta`,`dineroGastado`) VALUES ('" + a.iduser + "' , '" + a.name + "' ,'" + a.pasword + "' ,'" + a.admin + "','" + a.apellido + "' ,'" + a.email + "' ,'" + a.edad + "' ,'" + a.numCuenta + "' ,'" + a.dineroGastado + "');";
           
             try

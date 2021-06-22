@@ -14,9 +14,10 @@ namespace GetNewGamesAPI.Controllers
     [Route("api/Sale/{action}")]
 
 
+    
     public class SaleController : ApiController
     {
-
+        //GET TOTAL
         [HttpGet]
         [ActionName("Get")]
         public IEnumerable<Sale> Get()
@@ -24,7 +25,7 @@ namespace GetNewGamesAPI.Controllers
             return new SaleRepositorio().Retrive();
         }
 
-
+        // GET ENVIO NACIONAL
         [HttpGet]
         [ActionName("GetN")]
         public IEnumerable<Sale> GetN()
@@ -33,7 +34,7 @@ namespace GetNewGamesAPI.Controllers
 
         }
 
-
+        // GET ENVIO INTERNACIONAL
         [HttpGet]
         [ActionName("GetI")]
         public IEnumerable<Sale> GetI()
@@ -41,7 +42,7 @@ namespace GetNewGamesAPI.Controllers
             return new SaleRepositorio().RetriveI();
         }
 
-
+        // FILTRO POR ID 
         [HttpGet]
         [Route("api/Sale/Get/{id}")]
         public IEnumerable<Sale> Get(int id)
@@ -49,7 +50,7 @@ namespace GetNewGamesAPI.Controllers
             return new SaleRepositorio().Retrive2(id);
         }
 
-
+        // FILTRO POR GAME
         [HttpGet]
         [Route("api/Sale/Get/Game/{id}")]
         public IEnumerable<Sale> GetG(int id)
@@ -57,24 +58,26 @@ namespace GetNewGamesAPI.Controllers
             return new SaleRepositorio().RetriveByG(id);
         }
 
-
+        // FILTRO POR USUARIO
         [HttpGet]
         [Route("api/Sale/Get/User/{id}")]
         public IEnumerable<Sale> GetU(int id)
         {
             return new SaleRepositorio().RetriveByU(id);
         }
+
+        // FILTRO BETWEEN PRECIOS
         [HttpGet]
         [Route("api/Sale/Get/Precio/{p1}/{p2}")]
         public IEnumerable<Sale> GetP(int p1, int p2)
         {
             return new SaleRepositorio().RetriveP(p1, p2);
         }
+
+        // POST DE LA BASE DE DATOS
         [HttpPost]
         [ActionName("post")]
-
-
-
+          
         public void Post([FromBody] Sale value)
         {
             var repo = new SaleRepositorio();
